@@ -10,6 +10,9 @@
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\protocol\command_parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\protocol\raft_rpc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\kv_store.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

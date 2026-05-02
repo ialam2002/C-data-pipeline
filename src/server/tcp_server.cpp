@@ -13,6 +13,7 @@
 
 #include "consensus/raft_node.h"
 #include "protocol/command_parser.h"
+#include "protocol/raft_rpc.h"
 
 namespace dkv {
 
@@ -65,11 +66,22 @@ struct TcpServer::Impl {
         }
 
         void handleLine(const std::string& line) {
+            if (const auto rpc = raftRpcParser.parse(line); rpc.has_value()) {
+                const auto response = std::visit([this](const auto& request) {
+                    using RequestType = std::decay_t<decltype(request)>;
+
+                    if constexpr (std::is_same_v<RequestType, RequestVoteRequest>) {
+                        return RaftRpcParser::serialize(raftNode.handleRequestVote(request));
+                    } else {
+                        return RaftRpcParser::serialize(raftNode.handleAppendEntries(request));
+                    }
+                }, *rpc);
+                writeLine(response);
+                return;
+            }
+
             const auto command = parser.parse(line);
-            const auto response = command.has_value()
-                ? raftNode.handleClientCommand(*command)
-                : std::string("ERROR parse_error");
-            writeLine(response);
+            writeLine(command.has_value() ? raftNode.handleClientCommand(*command) : std::string("ERROR parse_error"));
         }
 
         void writeLine(const std::string& line) {
@@ -97,6 +109,7 @@ struct TcpServer::Impl {
         asio::ip::tcp::socket socket;
         RaftNode& raftNode;
         CommandParser parser;
+        RaftRpcParser raftRpcParser;
         std::array<char, 4096> buffer {};
         std::string incoming;
         std::deque<std::string> outgoing;

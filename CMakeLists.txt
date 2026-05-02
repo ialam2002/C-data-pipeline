@@ -24,6 +24,7 @@ add_executable(dkv_node
     src/main.cpp
     src/server/tcp_server.cpp
     src/protocol/command_parser.cpp
+    src/protocol/raft_rpc.cpp
     src/storage/kv_store.cpp
     src/storage/log_store.cpp
     src/consensus/raft_node.cpp

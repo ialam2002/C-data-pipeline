@@ -17,11 +17,21 @@
 
 int main(int argc, char* argv[]) {
     dkv::Endpoint endpoint {"127.0.0.1", 7000};
-    if (argc >= 2) {
+    bool serverOnly = false;
+
+    for (int index = 1; index < argc; ++index) {
+        const std::string argument = argv[index];
+
+        if (argument == "--server-only") {
+            serverOnly = true;
+            continue;
+        }
+
         try {
-            endpoint.port = static_cast<std::uint16_t>(std::stoul(argv[1]));
+            endpoint.port = static_cast<std::uint16_t>(std::stoul(argument));
         } catch (const std::exception&) {
-            std::cerr << "Invalid port: " << argv[1] << '\n';
+            std::cerr << "Invalid argument: " << argument << '\n';
+            std::cerr << "Usage: dkv_node [port] [--server-only]" << '\n';
             return 1;
         }
     }
@@ -51,7 +61,7 @@ int main(int argc, char* argv[]) {
     const bool interactiveInput = isatty(fileno(stdin)) != 0;
 #endif
 
-    if (!interactiveInput) {
+    if (serverOnly || !interactiveInput) {
         std::cout << "Running without interactive stdin. Stop the process with Ctrl+C." << '\n';
         std::promise<void>().get_future().wait();
         return 0;

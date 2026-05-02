@@ -9,7 +9,7 @@ Starter C++20 project for a portfolio-grade distributed key-value store.
 - command parsing for a Redis-like CLI surface
 - in-memory key-value state machine
 - append-only in-memory log abstraction
-- Raft node stub with leader/follower role handling
+- first-pass Raft RPC handling for RequestVote and AppendEntries
 - one-command-per-line client protocol over TCP
 
 ## Build
@@ -46,6 +46,39 @@ ROLE
 QUIT
 ```
 
+## Raft RPC Commands
+
+RequestVote:
+
+```text
+RAFT REQUEST_VOTE <term> <candidateId> <lastLogIndex> <lastLogTerm>
+```
+
+Response:
+
+```text
+RAFT REQUEST_VOTE_RESPONSE <term> <voteGranted>
+```
+
+AppendEntries heartbeat:
+
+```text
+RAFT APPEND_ENTRIES <term> <leaderId> <prevLogIndex> <prevLogTerm> <leaderCommit> NONE
+```
+
+AppendEntries with one replicated entry:
+
+```text
+RAFT APPEND_ENTRIES <term> <leaderId> <prevLogIndex> <prevLogTerm> <leaderCommit> PUT <entryTerm> <entryIndex> <key> <value...>
+RAFT APPEND_ENTRIES <term> <leaderId> <prevLogIndex> <prevLogTerm> <leaderCommit> DELETE <entryTerm> <entryIndex> <key>
+```
+
+Response:
+
+```text
+RAFT APPEND_ENTRIES_RESPONSE <term> <success> <matchIndex>
+```
+
 ## Quick TCP Test
 
 ```powershell
@@ -61,7 +94,7 @@ $reader.ReadLine()
 ## Suggested Next Steps
 
 1. Persist the Raft term, vote, and log to disk.
-2. Add AppendEntries and RequestVote RPC handling.
+2. Add outbound peer communication and leader heartbeat scheduling.
 3. Add multi-node integration tests.
 4. Split client and cluster RPC protocols.
 
