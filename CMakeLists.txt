@@ -10,6 +10,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+include(CTest)
+
 include(FetchContent)
 
 FetchContent_Declare(
@@ -48,4 +50,30 @@ if(MSVC)
     target_compile_options(dkv_node PRIVATE /W4 /permissive-)
 else()
     target_compile_options(dkv_node PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+if(BUILD_TESTING)
+    add_test(
+        NAME dkv_replication_bootstrap
+        COMMAND powershell -NoProfile -ExecutionPolicy Bypass -File
+            ${CMAKE_SOURCE_DIR}/tests/integration/bootstrap_replication.ps1
+            -NodeExe $<TARGET_FILE:dkv_node>
+            -RuntimeRoot ${CMAKE_BINARY_DIR}/test-runtime/bootstrap-replication
+    )
+
+    add_test(
+        NAME dkv_auto_election
+        COMMAND powershell -NoProfile -ExecutionPolicy Bypass -File
+            ${CMAKE_SOURCE_DIR}/tests/integration/auto_election.ps1
+            -NodeExe $<TARGET_FILE:dkv_node>
+            -RuntimeRoot ${CMAKE_BINARY_DIR}/test-runtime/auto-election
+    )
+
+    add_test(
+        NAME dkv_restart_recovery
+        COMMAND powershell -NoProfile -ExecutionPolicy Bypass -File
+            ${CMAKE_SOURCE_DIR}/tests/integration/restart_recovery.ps1
+            -NodeExe $<TARGET_FILE:dkv_node>
+            -RuntimeRoot ${CMAKE_BINARY_DIR}/test-runtime/restart-recovery
+    )
 endif()

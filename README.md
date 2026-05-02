@@ -22,6 +22,12 @@ cmake -S . -B build
 cmake --build build
 ```
 
+Run integration tests:
+
+```powershell
+ctest --test-dir build --output-on-failure -C Debug
+```
+
 ## Run
 
 ```powershell
@@ -124,6 +130,12 @@ $reader.ReadLine()
 2. Add conflict repair and catch-up for lagging followers.
 3. Add snapshotting and log compaction.
 4. Split client and cluster RPC protocols.
+
+## Test Coverage
+
+- bootstrap leader replication across two nodes
+- automatic leader election across two follower-started nodes
+- restart recovery of committed state and persisted Raft metadata
 
 ## Layout
 

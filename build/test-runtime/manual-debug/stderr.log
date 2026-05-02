@@ -1,0 +1,2 @@
+Invalid argument: Alam\Desktop\Projects\C-data-pipeline\build\test-runtime\manual-debug\leader
+Usage: dkv_node [port] [--server-only] [--bootstrap-leader|--no-bootstrap-leader] [--peer host:port] [--data-dir path]

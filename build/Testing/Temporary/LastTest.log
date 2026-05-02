@@ -1,0 +1,48 @@
+Start testing: May 02 15:48 Eastern Daylight Time
+----------------------------------------------------------
+1/3 Testing: dkv_replication_bootstrap
+1/3 Test: dkv_replication_bootstrap
+Command: "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe" "-NoProfile" "-ExecutionPolicy" "Bypass" "-File" "C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/tests/integration/bootstrap_replication.ps1" "-NodeExe" "C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build/Debug/dkv_node.exe" "-RuntimeRoot" "C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build/test-runtime/bootstrap-replication"
+Directory: C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build
+"dkv_replication_bootstrap" start time: May 02 15:48 Eastern Daylight Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   1.73 sec
+----------------------------------------------------------
+Test Passed.
+"dkv_replication_bootstrap" end time: May 02 15:48 Eastern Daylight Time
+"dkv_replication_bootstrap" time elapsed: 00:00:01
+----------------------------------------------------------
+
+2/3 Testing: dkv_auto_election
+2/3 Test: dkv_auto_election
+Command: "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe" "-NoProfile" "-ExecutionPolicy" "Bypass" "-File" "C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/tests/integration/auto_election.ps1" "-NodeExe" "C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build/Debug/dkv_node.exe" "-RuntimeRoot" "C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build/test-runtime/auto-election"
+Directory: C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build
+"dkv_auto_election" start time: May 02 15:48 Eastern Daylight Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   2.25 sec
+----------------------------------------------------------
+Test Passed.
+"dkv_auto_election" end time: May 02 15:48 Eastern Daylight Time
+"dkv_auto_election" time elapsed: 00:00:02
+----------------------------------------------------------
+
+3/3 Testing: dkv_restart_recovery
+3/3 Test: dkv_restart_recovery
+Command: "C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe" "-NoProfile" "-ExecutionPolicy" "Bypass" "-File" "C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/tests/integration/restart_recovery.ps1" "-NodeExe" "C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build/Debug/dkv_node.exe" "-RuntimeRoot" "C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build/test-runtime/restart-recovery"
+Directory: C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build
+"dkv_restart_recovery" start time: May 02 15:48 Eastern Daylight Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   1.62 sec
+----------------------------------------------------------
+Test Passed.
+"dkv_restart_recovery" end time: May 02 15:48 Eastern Daylight Time
+"dkv_restart_recovery" time elapsed: 00:00:01
+----------------------------------------------------------
+
+End testing: May 02 15:48 Eastern Daylight Time
