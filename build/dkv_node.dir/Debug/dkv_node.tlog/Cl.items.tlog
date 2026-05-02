@@ -1,0 +1,6 @@
+C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\main.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\main.obj
+C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\server\tcp_server.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\tcp_server.obj
+C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\protocol\command_parser.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\command_parser.obj
+C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\kv_store.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\kv_store.obj
+C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\log_store.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\log_store.obj
+C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\consensus\raft_node.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\raft_node.obj

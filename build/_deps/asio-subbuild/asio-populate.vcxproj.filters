@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\44403f794c97cbeb7ad75be28bd935a4\asio-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\44403f794c97cbeb7ad75be28bd935a4\asio-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\44403f794c97cbeb7ad75be28bd935a4\asio-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\44403f794c97cbeb7ad75be28bd935a4\asio-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\44403f794c97cbeb7ad75be28bd935a4\asio-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\44403f794c97cbeb7ad75be28bd935a4\asio-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\44403f794c97cbeb7ad75be28bd935a4\asio-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\44403f794c97cbeb7ad75be28bd935a4\asio-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\fa926bc462cbb8d3d9560a4ba5428c8b\asio-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\c1e8470aa207a199f3f6ee3b8c9a1fe3\asio-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\asio-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{10B3A669-6008-3A16-A451-6F43F045C466}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

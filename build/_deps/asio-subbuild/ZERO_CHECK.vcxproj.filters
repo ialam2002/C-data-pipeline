@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\_deps\asio-subbuild\CMakeFiles\c1e8470aa207a199f3f6ee3b8c9a1fe3\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{10B3A669-6008-3A16-A451-6F43F045C466}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

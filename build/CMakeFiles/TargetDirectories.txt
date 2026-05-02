@@ -1,0 +1,3 @@
+C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build/CMakeFiles/dkv_node.dir
+C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Iftekhar Alam/Desktop/Projects/C-data-pipeline/build/CMakeFiles/ZERO_CHECK.dir
