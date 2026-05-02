@@ -1,6 +1,13 @@
 #include <iostream>
+#include <future>
 #include <stdexcept>
 #include <string>
+
+#ifdef _WIN32
+#include <io.h>
+#else
+#include <unistd.h>
+#endif
 
 #include "consensus/raft_node.h"
 #include "protocol/command_parser.h"
@@ -37,6 +44,18 @@ int main(int argc, char* argv[]) {
     std::cout << "dkv_node started at " << server.address() << '\n';
     std::cout << "TCP clients can send newline-delimited commands." << '\n';
     std::cout << "Local console commands are also enabled. Enter QUIT to exit." << '\n';
+
+#ifdef _WIN32
+    const bool interactiveInput = _isatty(_fileno(stdin)) != 0;
+#else
+    const bool interactiveInput = isatty(fileno(stdin)) != 0;
+#endif
+
+    if (!interactiveInput) {
+        std::cout << "Running without interactive stdin. Stop the process with Ctrl+C." << '\n';
+        std::promise<void>().get_future().wait();
+        return 0;
+    }
 
     std::string line;
     while (std::getline(std::cin, line)) {
