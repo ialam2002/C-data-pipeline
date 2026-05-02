@@ -5,4 +5,5 @@ C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\protocol\command_par
 C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\protocol\raft_rpc.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\raft_rpc.obj
 C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\kv_store.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\kv_store.obj
 C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\log_store.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\log_store.obj
+C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\persistent_state.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\persistent_state.obj
 C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\consensus\raft_node.cpp;C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\build\dkv_node.dir\Debug\raft_node.obj

@@ -379,6 +379,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\protocol\raft_rpc.cpp" />
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\kv_store.cpp" />
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\log_store.cpp" />
+    <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\persistent_state.cpp" />
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\consensus\raft_node.cpp" />
   </ItemGroup>
   <ItemGroup />

@@ -28,6 +28,7 @@ add_executable(dkv_node
     src/protocol/raft_rpc.cpp
     src/storage/kv_store.cpp
     src/storage/log_store.cpp
+    src/storage/persistent_state.cpp
     src/consensus/raft_node.cpp
 )
 

@@ -8,10 +8,11 @@ Starter C++20 project for a portfolio-grade distributed key-value store.
 - newline-delimited TCP server built on standalone Asio
 - command parsing for a Redis-like CLI surface
 - in-memory key-value state machine
-- append-only in-memory log abstraction
+- append-only on-disk log abstraction with recovery
 - first-pass Raft RPC handling for RequestVote and AppendEntries
 - outbound leader heartbeats and quorum-based single-entry replication to configured peers
 - randomized follower election timeouts and outbound RequestVote leader elections
+- persistent Raft term, vote, and commit index metadata
 - one-command-per-line client protocol over TCP
 
 ## Build
@@ -42,6 +43,14 @@ Automatic election example:
 ```
 
 With no explicit bootstrap leader, nodes start as followers and elect a leader after a randomized timeout.
+
+Persistent storage example:
+
+```powershell
+.\build\Debug\dkv_node.exe 7100 --server-only --bootstrap-leader --data-dir .\data\node-7100
+```
+
+By default, each port uses `data/<port>` for `raft.log` and `raft.state`.
 
 On non-MSVC generators, the executable path may differ.
 
@@ -111,9 +120,9 @@ $reader.ReadLine()
 
 ## Suggested Next Steps
 
-1. Persist the Raft term, vote, and log to disk.
-2. Add multi-node integration tests.
-3. Add conflict repair and catch-up for lagging followers.
+1. Add multi-node integration tests.
+2. Add conflict repair and catch-up for lagging followers.
+3. Add snapshotting and log compaction.
 4. Split client and cluster RPC protocols.
 
 ## Layout

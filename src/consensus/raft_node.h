@@ -14,12 +14,13 @@
 #include "common/types.h"
 #include "storage/kv_store.h"
 #include "storage/log_store.h"
+#include "storage/persistent_state.h"
 
 namespace dkv {
 
 class RaftNode {
 public:
-    RaftNode(std::string nodeId, KvStore& kvStore, LogStore& logStore, std::vector<Endpoint> peers = {});
+    RaftNode(std::string nodeId, KvStore& kvStore, LogStore& logStore, PersistentStateStore& persistentStateStore, std::vector<Endpoint> peers = {});
     ~RaftNode();
 
     void start(bool bootstrapLeader = true);
@@ -40,12 +41,14 @@ private:
     bool replicateToQuorum(const LogEntry& entry);
     void broadcastHeartbeat();
     void applyCommittedEntriesUnlocked();
+    void persistStateUnlocked() const;
     void resetElectionDeadlineUnlocked();
     bool isCandidateLogUpToDate(std::uint64_t candidateLastLogIndex, std::uint64_t candidateLastLogTerm) const;
 
     std::string nodeId_;
     KvStore& kvStore_;
     LogStore& logStore_;
+    PersistentStateStore& persistentStateStore_;
     std::vector<Endpoint> peers_;
     PeerClient peerClient_;
 

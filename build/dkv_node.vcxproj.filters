@@ -22,6 +22,9 @@
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\log_store.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\storage\persistent_state.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\consensus\raft_node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

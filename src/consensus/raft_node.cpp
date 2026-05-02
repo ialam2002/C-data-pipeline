@@ -7,13 +7,23 @@
 
 namespace dkv {
 
-RaftNode::RaftNode(std::string nodeId, KvStore& kvStore, LogStore& logStore, std::vector<Endpoint> peers)
+RaftNode::RaftNode(std::string nodeId, KvStore& kvStore, LogStore& logStore, PersistentStateStore& persistentStateStore, std::vector<Endpoint> peers)
     : nodeId_(std::move(nodeId)),
       kvStore_(kvStore),
       logStore_(logStore),
-            peers_(std::move(peers)),
-            randomEngine_(std::random_device {}()) {
-        electionDeadline_ = std::chrono::steady_clock::now();
+      persistentStateStore_(persistentStateStore),
+      peers_(std::move(peers)),
+      randomEngine_(std::random_device {}()) {
+    const auto persistentState = persistentStateStore_.load();
+    currentTerm_ = persistentState.currentTerm;
+    votedFor_ = persistentState.votedFor;
+    commitIndex_ = std::min(persistentState.commitIndex, logStore_.lastIndex());
+    applyCommittedEntriesUnlocked();
+    electionDeadline_ = std::chrono::steady_clock::now();
+
+    if (persistentState.commitIndex != commitIndex_) {
+        persistStateUnlocked();
+    }
 }
 
 RaftNode::~RaftNode() {
@@ -28,10 +38,10 @@ void RaftNode::start(bool bootstrapLeader) {
         leaderId_ = nodeId_;
         currentTerm_ = std::max<std::uint64_t>(currentTerm_, 1);
         votedFor_ = nodeId_;
+        persistStateUnlocked();
     } else {
         role_ = NodeRole::Follower;
         leaderId_.clear();
-        votedFor_.reset();
     }
 
     resetElectionDeadlineUnlocked();
@@ -55,6 +65,7 @@ void RaftNode::becomeLeader() {
     role_ = NodeRole::Leader;
     leaderId_ = nodeId_;
     votedFor_ = nodeId_;
+    persistStateUnlocked();
     resetElectionDeadlineUnlocked();
 }
 
@@ -64,6 +75,7 @@ void RaftNode::becomeFollower(std::string leaderId, std::uint64_t term) {
     leaderId_ = std::move(leaderId);
     currentTerm_ = term;
     votedFor_.reset();
+    persistStateUnlocked();
     resetElectionDeadlineUnlocked();
 }
 
@@ -126,6 +138,7 @@ RequestVoteResponse RaftNode::handleRequestVote(const RequestVoteRequest& reques
         role_ = NodeRole::Follower;
         leaderId_.clear();
         votedFor_.reset();
+        persistStateUnlocked();
     }
 
     const bool hasVoteAvailable = !votedFor_.has_value() || *votedFor_ == request.candidateId;
@@ -133,6 +146,7 @@ RequestVoteResponse RaftNode::handleRequestVote(const RequestVoteRequest& reques
 
     if (hasVoteAvailable && logUpToDate) {
         votedFor_ = request.candidateId;
+        persistStateUnlocked();
         resetElectionDeadlineUnlocked();
         return RequestVoteResponse {.term = currentTerm_, .voteGranted = true};
     }
@@ -154,6 +168,7 @@ AppendEntriesResponse RaftNode::handleAppendEntries(const AppendEntriesRequest& 
     if (request.term > currentTerm_) {
         currentTerm_ = request.term;
         votedFor_.reset();
+        persistStateUnlocked();
     }
 
     role_ = NodeRole::Follower;
@@ -198,7 +213,11 @@ AppendEntriesResponse RaftNode::handleAppendEntries(const AppendEntriesRequest& 
         }
     }
 
-    commitIndex_ = std::min(request.leaderCommit, logStore_.lastIndex());
+    const auto newCommitIndex = std::min(request.leaderCommit, logStore_.lastIndex());
+    if (newCommitIndex != commitIndex_) {
+        commitIndex_ = newCommitIndex;
+        persistStateUnlocked();
+    }
     applyCommittedEntriesUnlocked();
 
     return AppendEntriesResponse {
@@ -276,6 +295,7 @@ void RaftNode::runElection() {
         peers = peers_;
         lastLogIndex = logStore_.lastIndex();
         lastLogTerm = logStore_.lastTerm();
+        persistStateUnlocked();
         resetElectionDeadlineUnlocked();
     }
 
@@ -317,6 +337,7 @@ void RaftNode::runElection() {
         role_ = NodeRole::Leader;
         leaderId_ = nodeId_;
         votedFor_ = nodeId_;
+        persistStateUnlocked();
         resetElectionDeadlineUnlocked();
     }
 
@@ -384,6 +405,7 @@ bool RaftNode::replicateToQuorum(const LogEntry& entry) {
     {
         std::scoped_lock lock(mutex_);
         commitIndex_ = std::max(commitIndex_, entry.index);
+        persistStateUnlocked();
         applyCommittedEntriesUnlocked();
     }
 
@@ -439,6 +461,14 @@ void RaftNode::applyCommittedEntriesUnlocked() {
         kvStore_.apply(entry);
         lastApplied_ = entry.index;
     }
+}
+
+void RaftNode::persistStateUnlocked() const {
+    persistentStateStore_.save(PersistentStateData {
+        .currentTerm = currentTerm_,
+        .commitIndex = commitIndex_,
+        .votedFor = votedFor_,
+    });
 }
 
 bool RaftNode::isCandidateLogUpToDate(std::uint64_t candidateLastLogIndex, std::uint64_t candidateLastLogTerm) const {
