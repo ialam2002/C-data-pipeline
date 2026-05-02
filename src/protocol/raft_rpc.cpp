@@ -27,6 +27,18 @@ std::optional<std::uint64_t> parseUnsigned(const std::string& token) {
     }
 }
 
+std::optional<bool> parseBool(const std::string& token) {
+    if (token == "1") {
+        return true;
+    }
+
+    if (token == "0") {
+        return false;
+    }
+
+    return std::nullopt;
+}
+
 }  // namespace
 
 std::optional<RaftRpcMessage> RaftRpcParser::parse(const std::string& input) const {
@@ -119,6 +131,76 @@ std::optional<RaftRpcMessage> RaftRpcParser::parse(const std::string& input) con
     }
 
     return std::nullopt;
+}
+
+std::optional<RequestVoteResponse> RaftRpcParser::parseRequestVoteResponse(const std::string& input) const {
+    const auto tokens = split(input);
+    if (tokens.size() != 4 || tokens[0] != "RAFT" || tokens[1] != "REQUEST_VOTE_RESPONSE") {
+        return std::nullopt;
+    }
+
+    const auto term = parseUnsigned(tokens[2]);
+    const auto voteGranted = parseBool(tokens[3]);
+    if (!term.has_value() || !voteGranted.has_value()) {
+        return std::nullopt;
+    }
+
+    return RequestVoteResponse {
+        .term = *term,
+        .voteGranted = *voteGranted,
+    };
+}
+
+std::optional<AppendEntriesResponse> RaftRpcParser::parseAppendEntriesResponse(const std::string& input) const {
+    const auto tokens = split(input);
+    if (tokens.size() != 5 || tokens[0] != "RAFT" || tokens[1] != "APPEND_ENTRIES_RESPONSE") {
+        return std::nullopt;
+    }
+
+    const auto term = parseUnsigned(tokens[2]);
+    const auto success = parseBool(tokens[3]);
+    const auto matchIndex = parseUnsigned(tokens[4]);
+    if (!term.has_value() || !success.has_value() || !matchIndex.has_value()) {
+        return std::nullopt;
+    }
+
+    return AppendEntriesResponse {
+        .term = *term,
+        .success = *success,
+        .matchIndex = *matchIndex,
+    };
+}
+
+std::string RaftRpcParser::serialize(const RequestVoteRequest& request) {
+    return "RAFT REQUEST_VOTE " + std::to_string(request.term) + " " + request.candidateId +
+           " " + std::to_string(request.lastLogIndex) + " " + std::to_string(request.lastLogTerm);
+}
+
+std::string RaftRpcParser::serialize(const AppendEntriesRequest& request) {
+    std::string result = "RAFT APPEND_ENTRIES " + std::to_string(request.term) + " " + request.leaderId +
+        " " + std::to_string(request.prevLogIndex) + " " + std::to_string(request.prevLogTerm) +
+        " " + std::to_string(request.leaderCommit);
+
+    if (!request.entry.has_value()) {
+        result += " NONE";
+        return result;
+    }
+
+    const auto& entry = *request.entry;
+    if (entry.command.type == CommandType::Put) {
+        result += " PUT " + std::to_string(entry.term) + " " + std::to_string(entry.index) +
+            " " + entry.command.key + " " + entry.command.value;
+        return result;
+    }
+
+    if (entry.command.type == CommandType::Delete) {
+        result += " DELETE " + std::to_string(entry.term) + " " + std::to_string(entry.index) +
+            " " + entry.command.key;
+        return result;
+    }
+
+    result += " NONE";
+    return result;
 }
 
 std::string RaftRpcParser::serialize(const RequestVoteResponse& response) {

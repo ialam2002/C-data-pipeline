@@ -7,6 +7,9 @@
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\server\tcp_server.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\cluster\peer_client.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\Iftekhar Alam\Desktop\Projects\C-data-pipeline\src\protocol\command_parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

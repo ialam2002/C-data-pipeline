@@ -10,6 +10,7 @@ Starter C++20 project for a portfolio-grade distributed key-value store.
 - in-memory key-value state machine
 - append-only in-memory log abstraction
 - first-pass Raft RPC handling for RequestVote and AppendEntries
+- outbound leader heartbeats and quorum-based single-entry replication to configured peers
 - one-command-per-line client protocol over TCP
 
 ## Build
@@ -23,6 +24,13 @@ cmake --build build
 
 ```powershell
 .\build\Debug\dkv_node.exe
+```
+
+Two-node example:
+
+```powershell
+.\build\Debug\dkv_node.exe 7001 --server-only
+.\build\Debug\dkv_node.exe 7000 --server-only --bootstrap-leader --peer 127.0.0.1:7001
 ```
 
 On non-MSVC generators, the executable path may differ.
@@ -94,8 +102,8 @@ $reader.ReadLine()
 ## Suggested Next Steps
 
 1. Persist the Raft term, vote, and log to disk.
-2. Add outbound peer communication and leader heartbeat scheduling.
-3. Add multi-node integration tests.
+2. Add multi-node integration tests.
+3. Add RequestVote client-side election scheduling.
 4. Split client and cluster RPC protocols.
 
 ## Layout

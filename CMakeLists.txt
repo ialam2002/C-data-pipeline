@@ -23,6 +23,7 @@ FetchContent_MakeAvailable(asio)
 add_executable(dkv_node
     src/main.cpp
     src/server/tcp_server.cpp
+    src/cluster/peer_client.cpp
     src/protocol/command_parser.cpp
     src/protocol/raft_rpc.cpp
     src/storage/kv_store.cpp
