@@ -11,6 +11,7 @@ class PeerClient {
 public:
     explicit PeerClient(std::chrono::milliseconds timeout = std::chrono::milliseconds(750));
 
+    std::optional<RequestVoteResponse> sendRequestVote(const Endpoint& endpoint, const RequestVoteRequest& request) const;
     std::optional<AppendEntriesResponse> sendAppendEntries(const Endpoint& endpoint, const AppendEntriesRequest& request) const;
 
 private:

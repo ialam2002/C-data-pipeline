@@ -106,6 +106,7 @@ int main(int argc, char* argv[]) {
     std::cout << "dkv_node started at " << server.address() << '\n';
     std::cout << "TCP clients can send newline-delimited commands." << '\n';
     std::cout << "Local console commands are also enabled. Enter QUIT to exit." << '\n';
+    std::cout << "Bootstrap leader: " << (bootstrapLeader ? "true" : "false") << '\n';
 
 #ifdef _WIN32
     const bool interactiveInput = _isatty(_fileno(stdin)) != 0;

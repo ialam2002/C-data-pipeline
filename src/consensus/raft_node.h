@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <chrono>
+#include <random>
 #include <mutex>
 #include <optional>
 #include <string>
@@ -34,10 +35,12 @@ public:
     std::string info() const;
 
 private:
-    void runHeartbeatLoop(std::stop_token stopToken);
+    void runCoordinationLoop(std::stop_token stopToken);
+    void runElection();
     bool replicateToQuorum(const LogEntry& entry);
     void broadcastHeartbeat();
     void applyCommittedEntriesUnlocked();
+    void resetElectionDeadlineUnlocked();
     bool isCandidateLogUpToDate(std::uint64_t candidateLastLogIndex, std::uint64_t candidateLastLogTerm) const;
 
     std::string nodeId_;
@@ -54,6 +57,8 @@ private:
     std::string leaderId_;
     std::optional<std::string> votedFor_;
     std::jthread heartbeatThread_;
+    std::mt19937 randomEngine_;
+    std::chrono::steady_clock::time_point electionDeadline_;
 };
 
 }  // namespace dkv
